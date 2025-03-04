@@ -5,12 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "npm-run-all --parallel watch:js serve",
+    "dev": "npm-run-all watch:js",
     "compile": "npm-run-all compile:js minify:js",
     "watch:js": "rollup -c -w",
     "compile:js": "rollup -c",
-    "minify:js": "terser dist/main.js --compress --mangle -o dist/main.min.js",
-    "serve": "servor dist --reload --browse"
+    "minify:js": "terser dist/main.js --compress --mangle -o dist/main.min.js"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,6 @@
     "eslint-config-standard": "^17.1.0",
     "npm-run-all": "^4.1.5",
     "rollup": "^4.34.9",
-    "servor": "^4.0.2",
     "terser": "^5.39.0"
   },
   "browserslist": [
