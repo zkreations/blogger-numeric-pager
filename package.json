@@ -2,14 +2,14 @@
   "name": "blogger-numeric-pager",
   "version": "1.0.0",
   "description": "Blogger Numeric Pager is an advanced pagination for Blogger that works even in searches.",
-  "main": "index.js",
   "type": "module",
+  "main": "dist/main.js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "dev": "npm-run-all watch:js",
-    "compile": "npm-run-all compile:js minify:js",
-    "watch:js": "rollup -c -w",
-    "compile:js": "rollup -c",
-    "minify:js": "terser dist/main.js --compress --mangle -o dist/main.min.js"
+    "dev": "rollup -c -w",
+    "build": "rollup -c && terser dist/main.js --compress --mangle -o dist/main.min.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,6 @@
     "browserslist": "^4.24.4",
     "eslint": "^8.57.1",
     "eslint-config-standard": "^17.1.0",
-    "npm-run-all": "^4.1.5",
     "rollup": "^4.34.9",
     "terser": "^5.39.0"
   },
