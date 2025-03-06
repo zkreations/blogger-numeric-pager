@@ -59,7 +59,7 @@ class NumericPager {
       })
     }
 
-    if (config.maxResults >= feed.totalPosts) {
+    if (config.maxResults >= (storedTotal || feed.totalPosts)) {
       this.pagerContainer.remove()
     }
   }
