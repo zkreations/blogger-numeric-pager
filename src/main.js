@@ -23,8 +23,7 @@ class NumericPager {
   async initPagination () {
     if (!this.pagerContainer || !this.numberContainer) return
 
-    const { query, label, homeUrl } = this.config
-
+    const { query, label, homeUrl, checkForUpdates } = this.config
     const storedData = getStoredData(query, label)
 
     const {
@@ -39,24 +38,24 @@ class NumericPager {
       maxResults: this.getPostPerPage()
     }
 
-    if (storedTotal && storedDates.length) {
-      createPagination({
-        config,
-        totalPosts: storedTotal,
-        postDates: storedDates
-      })
+    const hasStoredData = storedTotal && storedDates.length
+
+    if (hasStoredData) {
+      createPagination({ config, totalPosts: storedTotal, postDates: storedDates })
     }
 
+    // If there is stored data and we don't want to check for updates, we can stop here
+    if (hasStoredData && !checkForUpdates) {
+      if (config.maxResults >= storedTotal) this.pagerContainer.remove()
+      return
+    }
+
+    // Continue if there is no stored data or we want to check for updates
     const feed = await fetchFeedData({ homeUrl, query, label })
 
     if (feed.blogUpdated !== storedUpdated || !storedDates.length) {
       const postData = await fetchPostData({ config, totalPosts: feed.totalPosts })
-
-      createPagination({
-        config,
-        totalPosts: postData.totalPosts,
-        postDates: postData.postDates
-      })
+      createPagination({ config, totalPosts: postData.totalPosts, postDates: postData.postDates })
     }
 
     if (config.maxResults >= (storedTotal || feed.totalPosts)) {
