@@ -13,7 +13,7 @@ function generateHash (str) {
 // @param {String} label - The label
 // @param {String} query - The search query
 // @returns {String} - The storage key
-function createStorageKey (label = null, query = null) {
+function createStorageKey (query = null, label = null) {
   if (query) return `postData-query${generateHash(query)}`
   if (label) return `postData-label${generateHash(label)}`
 
@@ -24,8 +24,8 @@ function createStorageKey (label = null, query = null) {
 // @param {data} data - The data to store
 // @param {String} label - The label
 // @param {String} query - The search query
-export function setStoredData (data, label, query) {
-  const STORAGE_KEY = createStorageKey(label, query)
+export function setStoredData (data, query, label) {
+  const STORAGE_KEY = createStorageKey(query, label)
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
 }
 
@@ -33,7 +33,7 @@ export function setStoredData (data, label, query) {
 // @param {String} label - The label
 // @param {String} query - The search query
 // @returns {Object} - The stored data
-export function getStoredData (label, query) {
-  const STORAGE_KEY = createStorageKey(label, query)
+export function getStoredData (query, label) {
+  const STORAGE_KEY = createStorageKey(query, label)
   return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
 }
