@@ -9,7 +9,6 @@ export const defaults = {
   dotsClass: 'pagination-dots',
   activeClass: 'is-active',
   totalVisibleNumbers: 5,
-  postPerPage: 8,
   byDate: 'false',
   maxResults: null,
   query: null,

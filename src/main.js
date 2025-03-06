@@ -11,7 +11,8 @@ class NumericPager {
     this.config = {
       ...defaults,
       ...options,
-      ...getDataFromUrl(this.currentUrl)
+      ...getDataFromUrl(this.currentUrl),
+      homeUrl: this.currentUrl.origin
     }
 
     this.pagerContainer = document.querySelector(this.config.pagerSelector)
@@ -22,18 +23,7 @@ class NumericPager {
   async initPagination () {
     if (!this.pagerContainer || !this.numberContainer) return
 
-    const {
-      totalVisibleNumbers,
-      query,
-      byDate,
-      label,
-      postPerPage,
-      updatedMax,
-      start,
-      activeClass,
-      numberClass,
-      dotsClass
-    } = this.config
+    const { query, label, homeUrl } = this.config
 
     const storedData = getStoredData(query, label)
 
@@ -43,22 +33,10 @@ class NumericPager {
       blogUpdated: storedUpdated
     } = storedData
 
-    const homeUrl = this.currentUrl.origin
-    const maxResults = this.getPostPerPage() || postPerPage
-
     const config = {
+      ...this.config,
       numberContainer: this.numberContainer,
-      maxResults,
-      homeUrl,
-      query,
-      label,
-      totalVisibleNumbers,
-      byDate,
-      updatedMax,
-      start,
-      activeClass,
-      numberClass,
-      dotsClass
+      maxResults: this.getPostPerPage()
     }
 
     if (storedTotal && storedDates.length) {
@@ -81,7 +59,7 @@ class NumericPager {
       })
     }
 
-    if (postPerPage >= feed.totalPosts) {
+    if (config.maxResults >= feed.totalPosts) {
       this.pagerContainer.remove()
     }
   }
