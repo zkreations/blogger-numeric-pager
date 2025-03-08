@@ -15,27 +15,19 @@ class BloggerPager {
       homeUrl: this.currentUrl.origin
     }
 
-    const {
-      pagerSelector,
-      numberSelector,
-      entriesSelector,
-      entrySelector
-    } = this.config
-
-    this.pagerContainer = document.querySelector(pagerSelector)
-    this.numberContainer = document.querySelector(numberSelector)
-    this.entriesContainer = document.querySelector(entriesSelector)
-
-    this.postPerPage = this.entriesContainer
-      ?.querySelectorAll(entrySelector).length
-
-    this.totalEntries = Number(this.config.maxResults) || this.postPerPage || null
+    this.pagerContainer = document.querySelector(this.config.pagerSelector)
+    this.numberContainer = document.querySelector(this.config.numberSelector)
   }
 
   async init () {
     if (!this.pagerContainer || !this.numberContainer) return
 
-    const { query, label, homeUrl, checkForUpdates } = this.config
+    const { query, label, homeUrl, checkForUpdates, entriesSelector, entrySelector } = this.config
+
+    const entriesContainer = document.querySelector(entriesSelector)
+    const postPerPage = entriesContainer?.querySelectorAll(entrySelector).length
+    const maxResults = Number(this.config.maxResults) || postPerPage || null
+
     const storedData = getStoredData(query, label)
 
     const {
@@ -47,13 +39,17 @@ class BloggerPager {
     const config = {
       ...this.config,
       numberContainer: this.numberContainer,
-      maxResults: this.totalEntries
+      maxResults
     }
 
     const hasStoredData = storedTotal && storedDates.length
 
     if (hasStoredData) {
-      createPagination({ config, totalPosts: storedTotal, postDates: storedDates })
+      createPagination({
+        config,
+        totalPosts: storedTotal,
+        postDates: storedDates
+      })
     }
 
     // If there is stored data and we don't want to check for updates, we can stop here
@@ -67,7 +63,12 @@ class BloggerPager {
 
     if (feed.blogUpdated !== storedUpdated || !storedDates.length) {
       const postData = await fetchPostData({ config, totalPosts: feed.totalPosts })
-      createPagination({ config, totalPosts: postData.totalPosts, postDates: postData.postDates })
+
+      createPagination({
+        config,
+        totalPosts: postData.totalPosts,
+        postDates: postData.postDates
+      })
     }
 
     if (config.maxResults >= (storedTotal || feed.totalPosts)) {

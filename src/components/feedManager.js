@@ -15,7 +15,7 @@ export async function fetchFeedData ({ homeUrl, query, label }) {
 
   const storedData = getStoredData(query, label)
 
-  storedData.totalPosts = totalPosts
+  if (!query) storedData.totalPosts = totalPosts
   storedData.blogUpdated = blogUpdated
 
   setStoredData(storedData, query, label)

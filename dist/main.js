@@ -187,7 +187,7 @@
     const totalPosts = Number(data.feed.openSearch$totalResults.$t);
     const blogUpdated = data.feed.updated.$t;
     const storedData = getStoredData(query, label);
-    storedData.totalPosts = totalPosts;
+    if (!query) storedData.totalPosts = totalPosts;
     storedData.blogUpdated = blogUpdated;
     setStoredData(storedData, query, label);
     return {
@@ -423,17 +423,8 @@
         ...getDataFromUrl(this.currentUrl),
         homeUrl: this.currentUrl.origin
       };
-      const {
-        pagerSelector,
-        numberSelector,
-        entriesSelector,
-        entrySelector
-      } = this.config;
-      this.pagerContainer = document.querySelector(pagerSelector);
-      this.numberContainer = document.querySelector(numberSelector);
-      this.entriesContainer = document.querySelector(entriesSelector);
-      this.postPerPage = this.entriesContainer?.querySelectorAll(entrySelector).length;
-      this.totalEntries = Number(this.config.maxResults) || this.postPerPage || null;
+      this.pagerContainer = document.querySelector(this.config.pagerSelector);
+      this.numberContainer = document.querySelector(this.config.numberSelector);
     }
     async init() {
       if (!this.pagerContainer || !this.numberContainer) return;
@@ -441,8 +432,13 @@
         query,
         label,
         homeUrl,
-        checkForUpdates
+        checkForUpdates,
+        entriesSelector,
+        entrySelector
       } = this.config;
+      const entriesContainer = document.querySelector(entriesSelector);
+      const postPerPage = entriesContainer?.querySelectorAll(entrySelector).length;
+      const maxResults = Number(this.config.maxResults) || postPerPage || null;
       const storedData = getStoredData(query, label);
       const {
         totalPosts: storedTotal = 0,
@@ -452,7 +448,7 @@
       const config = {
         ...this.config,
         numberContainer: this.numberContainer,
-        maxResults: this.totalEntries
+        maxResults
       };
       const hasStoredData = storedTotal && storedDates.length;
       if (hasStoredData) {
