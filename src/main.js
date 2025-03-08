@@ -20,7 +20,7 @@ class NumericPager {
     this.entriesContainer = document.querySelector(this.config.entriesSelector)
   }
 
-  async initPagination () {
+  async init () {
     if (!this.pagerContainer || !this.numberContainer) return
 
     const { query, label, homeUrl, checkForUpdates } = this.config
