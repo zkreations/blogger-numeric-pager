@@ -40,29 +40,29 @@ npm i blogger-numeric-pager
 You can use **blogger-numeric-pager** as an ES6 module or as a global script. For example, to use it as an ES6 module:
 
 ```javascript
-import NumericPager from 'blogger-numeric-pager'
+import BloggerNumericPager from 'blogger-numeric-pager'
 
 const pager = new BloggerNumericPager()
-await pager.init()
+pager.init()
 ```
 
-If you are using it as a global script, you can omit the import and simply create a new instance of `NumericPager`:
+If you are using it as a global script, you can omit the import and simply create a new instance of `BloggerNumericPager`:
 
 ## Options
 
 You can customize **blogger-numeric-pager** by passing an options object to the constructor. Available options are:
 
-| Option                | Type    | Description                                                   | Default                |
-|-----------------------|---------|---------------------------------------------------------------|------------------------|
-| `entriesSelector`     | string  | Selector for the entries container                           | `.blog-entries`        |
-| `entrySelector`       | string  | Selector for the entries                                     | `.entry`               |
-| `pagerSelector`       | string  | Selector for the pagination container                        | `.blog-pager`          |
-| `numberSelector`      | string  | Selector for the pagination numbers container                | `.pagination-numbers`  |
-| `numberClass`         | string  | CSS class for pagination numbers                             | `pagination-item`      |
-| `dotsClass`           | string  | CSS class for the dots (ellipsis)                            | `pagination-dots`      |
-| `activeClass`         | string  | CSS class for active numbers                                 | `is-active`            |
-| `totalVisibleNumbers` | number  | Number of visible pagination numbers                         | `5`                    |
-| `checkForUpdates`     | boolean | Checks for blog changes to rebuild pagination               | `true`                 |
+| Option                | Type    | Description                                      | Default                |
+|-----------------------|---------|--------------------------------------------------|------------------------|
+| `entriesSelector`     | string  | Selector for the entries container               | `.blog-entries`        |
+| `entrySelector`       | string  | Selector for the entries                         | `.entry`               |
+| `pagerSelector`       | string  | Selector for the pagination container            | `.blog-pager`          |
+| `numberSelector`      | string  | Selector for the pagination numbers container    | `.pagination-numbers`  |
+| `numberClass`         | string  | CSS class for pagination numbers                 | `pagination-item`      |
+| `dotsClass`           | string  | CSS class for the dots (ellipsis)                | `pagination-dots`      |
+| `activeClass`         | string  | CSS class for active numbers                     | `is-active`            |
+| `totalVisibleNumbers` | number  | Number of visible pagination numbers             | `5`                    |
+| `checkForUpdates`     | boolean | Checks for blog changes to rebuild pagination    | `true`                 |
 
 For example, to customize the number of visible pagination links and disable update checking:
 
@@ -72,8 +72,17 @@ const pager = new BloggerNumericPager({
   checkForUpdates: false
 })
 
-await pager.init()
+pager.init()
 ```
+
+## Methods
+
+All methods are available through the instance of `BloggerNumericPager`:
+
+| Method          | Description                   | Returns |
+|-----------------|-------------------------------|---------|
+| `init()`        | Initializes the pagination    | <Promise> |
+
 
 ## Supporting
 
