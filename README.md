@@ -46,7 +46,7 @@ const pager = new BloggerNumericPager()
 pager.init()
 ```
 
-If you are using it as a global script, you can omit the import and simply create a new instance of `BloggerNumericPager`:
+If you are using it as a global script, you can omit the import.
 
 ## Options
 
