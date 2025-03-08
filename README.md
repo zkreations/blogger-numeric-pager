@@ -82,4 +82,3 @@ If you want to help me keep this and other related projects always up to date, y
 ## License
 
 **blogger-numeric-pager** is licensed under the MIT License
-```
