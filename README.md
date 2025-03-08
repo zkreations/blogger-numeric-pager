@@ -42,16 +42,11 @@ You can use **blogger-numeric-pager** as an ES6 module or as a global script. Fo
 ```javascript
 import NumericPager from 'blogger-numeric-pager'
 
-const pager = new NumericPager()
+const pager = new BloggerNumericPager()
 await pager.init()
 ```
 
 If you are using it as a global script, you can omit the import and simply create a new instance of `NumericPager`:
-
-```javascript
-const pager = new NumericPager()
-await pager.init()
-```
 
 ## Options
 
