@@ -4,8 +4,10 @@
   "description": "Blogger Numeric Pager is an advanced pagination for Blogger that works even in searches.",
   "type": "module",
   "main": "dist/main.js",
+  "types": "index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "index.d.ts"
   ],
   "scripts": {
     "dev": "rollup -c -w",
