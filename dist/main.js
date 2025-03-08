@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.NumericPager = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.BloggerNumericPager = factory());
 })(this, (function () { 'use strict';
 
   // Define the default values for the blog pagination
@@ -15,7 +15,7 @@
     dotsClass: 'pagination-dots',
     activeClass: 'is-active',
     totalVisibleNumbers: 5,
-    postPerPage: 8,
+    checkForUpdates: true,
     byDate: 'false',
     maxResults: null,
     query: null,
@@ -146,7 +146,7 @@
   // @param {String} label - The label
   // @param {String} query - The search query
   // @returns {String} - The storage key
-  function createStorageKey(label = null, query = null) {
+  function createStorageKey(query = null, label = null) {
     if (query) return `postData-query${generateHash(query)}`;
     if (label) return `postData-label${generateHash(label)}`;
     return 'postData';
@@ -156,8 +156,8 @@
   // @param {data} data - The data to store
   // @param {String} label - The label
   // @param {String} query - The search query
-  function setStoredData(data, label, query) {
-    const STORAGE_KEY = createStorageKey(label, query);
+  function setStoredData(data, query, label) {
+    const STORAGE_KEY = createStorageKey(query, label);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   }
 
@@ -165,8 +165,8 @@
   // @param {String} label - The label
   // @param {String} query - The search query
   // @returns {Object} - The stored data
-  function getStoredData(label, query) {
-    const STORAGE_KEY = createStorageKey(label, query);
+  function getStoredData(query, label) {
+    const STORAGE_KEY = createStorageKey(query, label);
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
   }
 
@@ -187,9 +187,7 @@
     const totalPosts = Number(data.feed.openSearch$totalResults.$t);
     const blogUpdated = data.feed.updated.$t;
     const storedData = getStoredData(query, label);
-    if (!query) {
-      storedData.totalPosts = totalPosts;
-    }
+    storedData.totalPosts = totalPosts;
     storedData.blogUpdated = blogUpdated;
     setStoredData(storedData, query, label);
     return {
@@ -422,25 +420,28 @@
       this.config = {
         ...defaults,
         ...options,
-        ...getDataFromUrl(this.currentUrl)
+        ...getDataFromUrl(this.currentUrl),
+        homeUrl: this.currentUrl.origin
       };
-      this.pagerContainer = document.querySelector(this.config.pagerSelector);
-      this.numberContainer = document.querySelector(this.config.numberSelector);
-      this.entriesContainer = document.querySelector(this.config.entriesSelector);
+      const {
+        pagerSelector,
+        numberSelector,
+        entriesSelector,
+        entrySelector
+      } = this.config;
+      this.pagerContainer = document.querySelector(pagerSelector);
+      this.numberContainer = document.querySelector(numberSelector);
+      this.entriesContainer = document.querySelector(entriesSelector);
+      this.postPerPage = this.entriesContainer?.querySelectorAll(entrySelector).length;
+      this.totalEntries = Number(this.config.maxResults) || this.postPerPage || null;
     }
-    async initPagination() {
+    async init() {
       if (!this.pagerContainer || !this.numberContainer) return;
       const {
-        totalVisibleNumbers,
         query,
-        byDate,
         label,
-        postPerPage,
-        updatedMax,
-        start,
-        activeClass,
-        numberClass,
-        dotsClass
+        homeUrl,
+        checkForUpdates
       } = this.config;
       const storedData = getStoredData(query, label);
       const {
@@ -448,29 +449,27 @@
         postDates: storedDates = [],
         blogUpdated: storedUpdated
       } = storedData;
-      const homeUrl = this.currentUrl.origin;
-      const maxResults = this.getPostPerPage() || postPerPage;
       const config = {
+        ...this.config,
         numberContainer: this.numberContainer,
-        maxResults,
-        homeUrl,
-        query,
-        label,
-        totalVisibleNumbers,
-        byDate,
-        updatedMax,
-        start,
-        activeClass,
-        numberClass,
-        dotsClass
+        maxResults: this.totalEntries
       };
-      if (storedTotal && storedDates.length) {
+      const hasStoredData = storedTotal && storedDates.length;
+      if (hasStoredData) {
         createPagination({
           config,
           totalPosts: storedTotal,
           postDates: storedDates
         });
       }
+
+      // If there is stored data and we don't want to check for updates, we can stop here
+      if (hasStoredData && !checkForUpdates) {
+        if (config.maxResults >= storedTotal) this.pagerContainer.remove();
+        return;
+      }
+
+      // Continue if there is no stored data or we want to check for updates
       const feed = await fetchFeedData({
         homeUrl,
         query,
@@ -487,17 +486,9 @@
           postDates: postData.postDates
         });
       }
-      if (postPerPage >= feed.totalPosts) {
+      if (config.maxResults >= (storedTotal || feed.totalPosts)) {
         this.pagerContainer.remove();
       }
-    }
-    getPostPerPage() {
-      const {
-        maxResults,
-        entrySelector
-      } = this.config;
-      const totalEntries = this.entriesContainer?.querySelectorAll(entrySelector).length;
-      return Number(maxResults) || totalEntries || null;
     }
   }
 
