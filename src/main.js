@@ -15,9 +15,21 @@ class NumericPager {
       homeUrl: this.currentUrl.origin
     }
 
-    this.pagerContainer = document.querySelector(this.config.pagerSelector)
-    this.numberContainer = document.querySelector(this.config.numberSelector)
-    this.entriesContainer = document.querySelector(this.config.entriesSelector)
+    const {
+      pagerSelector,
+      numberSelector,
+      entriesSelector,
+      entrySelector
+    } = this.config
+
+    this.pagerContainer = document.querySelector(pagerSelector)
+    this.numberContainer = document.querySelector(numberSelector)
+    this.entriesContainer = document.querySelector(entriesSelector)
+
+    this.postPerPage = this.entriesContainer
+      ?.querySelectorAll(entrySelector).length
+
+    this.totalEntries = Number(this.config.maxResults) || this.postPerPage || null
   }
 
   async init () {
@@ -35,7 +47,7 @@ class NumericPager {
     const config = {
       ...this.config,
       numberContainer: this.numberContainer,
-      maxResults: this.getPostPerPage()
+      maxResults: this.totalEntries
     }
 
     const hasStoredData = storedTotal && storedDates.length
@@ -61,13 +73,6 @@ class NumericPager {
     if (config.maxResults >= (storedTotal || feed.totalPosts)) {
       this.pagerContainer.remove()
     }
-  }
-
-  getPostPerPage () {
-    const { maxResults, entrySelector } = this.config
-    const totalEntries = this.entriesContainer?.querySelectorAll(entrySelector).length
-
-    return Number(maxResults) || totalEntries || null
   }
 }
 
