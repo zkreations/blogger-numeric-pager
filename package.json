@@ -1,6 +1,6 @@
 {
   "name": "blogger-numeric-pager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Blogger Numeric Pager is an advanced pagination for Blogger that works even in searches.",
   "type": "module",
   "main": "dist/main.js",
