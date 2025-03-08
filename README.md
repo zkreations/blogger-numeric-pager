@@ -37,19 +37,19 @@ npm i blogger-numeric-pager
 
 ## How to use
 
-You can use **blogger-numeric-pager** as an ES6 module or as a global script. For example, to use it as an ES6 module you can import it with any variable name:
+You can use **blogger-numeric-pager** as an ES6 module or as a global script. For example:
 
 ```javascript
-import NumericPager from 'blogger-numeric-pager'
+import BloggerPager from 'blogger-numeric-pager'
 
-const pager = new NumericPager()
+const pager = new BloggerPager()
 pager.init()
 ```
 
-If you are using it as a global script, you can access it via the `BloggerNumericPager` global variable:
+If you are using it as a global script, you can access it via the `BloggerPager` global variable:
 
 ```javascript
-const pager = new BloggerNumericPager()
+const pager = new BloggerPager()
 pager.init()
 ```
 
@@ -72,7 +72,7 @@ You can customize **blogger-numeric-pager** by passing an options object to the 
 For example, to customize the number of visible pagination links and disable update checking:
 
 ```javascript
-const pager = new BloggerNumericPager({
+const pager = new BloggerPager({
   totalVisibleNumbers: 7,
   checkForUpdates: false
 })
@@ -82,7 +82,7 @@ pager.init()
 
 ## Methods
 
-All methods are available through the instance of `BloggerNumericPager`:
+All methods are available through the instance of `BloggerPager`:
 
 | Method     | Description                   | Returns |
 |------------|-------------------------------|---------|

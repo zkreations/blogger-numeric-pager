@@ -4,7 +4,7 @@ import { fetchFeedData, fetchPostData } from './components/feedManager'
 import { getStoredData } from './components/storage'
 import { createPagination } from './components/renderer'
 
-class NumericPager {
+class BloggerPager {
   constructor (options = {}) {
     this.currentUrl = new URL(window.location.href)
 
@@ -76,4 +76,4 @@ class NumericPager {
   }
 }
 
-export default NumericPager
+export default BloggerPager

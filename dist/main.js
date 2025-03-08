@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.BloggerNumericPager = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.BloggerPager = factory());
 })(this, (function () { 'use strict';
 
   // Define the default values for the blog pagination
@@ -414,7 +414,7 @@
     });
   }
 
-  class NumericPager {
+  class BloggerPager {
     constructor(options = {}) {
       this.currentUrl = new URL(window.location.href);
       this.config = {
@@ -492,6 +492,6 @@
     }
   }
 
-  return NumericPager;
+  return BloggerPager;
 
 }));

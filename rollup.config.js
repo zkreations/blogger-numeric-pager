@@ -5,7 +5,7 @@ export default {
   output: {
     file: 'dist/main.js',
     format: 'umd',
-    name: 'BloggerNumericPager'
+    name: 'BloggerPager'
   },
   plugins: [
     babel({
