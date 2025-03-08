@@ -81,7 +81,7 @@ All methods are available through the instance of `BloggerNumericPager`:
 
 | Method          | Description                   | Returns |
 |-----------------|-------------------------------|---------|
-| `init()`        | Initializes the pagination    | <Promise> |
+| `init()`        | Initializes the pagination    | [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) |
 
 
 ## Supporting
