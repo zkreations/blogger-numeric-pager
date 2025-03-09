@@ -4,7 +4,7 @@
 
 ![V](https://img.shields.io/npm/v/blogger-numeric-pager) ![L](https://img.shields.io/npm/l/blogger-numeric-pager)
 
-**Blogger Numeric Pager** is an advanced pagination for Blogger that also works in searches. It stores processed data locally and only updates if the blog changes.
+**Blogger Numeric Pager** is an advanced pagination for Blogger that also works in searches. It stores processed data locally and only updates if the blog changes. [Live Demo →](https://www.zkreations.com/search?max-results=8)
 
 ## Features
 
