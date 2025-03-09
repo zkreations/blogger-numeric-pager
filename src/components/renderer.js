@@ -108,7 +108,7 @@ function updatePagination ({ config, postDates, pageNumber }) {
 function renderPagination ({ config, paginationData, postDates }) {
   if (!paginationData.length) return
 
-  const { numberContainer, numberClass, dotsClass } = config
+  const { numberContainer, numberClass, dotsClass, enableDotsJump } = config
   const fragment = document.createDocumentFragment()
 
   const createPageLink = ({ number, activeClass }) => {
@@ -120,15 +120,17 @@ function renderPagination ({ config, paginationData, postDates }) {
   }
 
   const createDots = (pageNumber) => {
-    const dots = document.createElement('button')
+    const dots = document.createElement(enableDotsJump ? 'button' : 'span')
     dots.className = dotsClass
     dots.textContent = '...'
     dots.dataset.page = pageNumber
 
-    dots.addEventListener('click', event => {
-      event.preventDefault()
-      updatePagination({ config, postDates, pageNumber })
-    })
+    if (enableDotsJump) {
+      dots.addEventListener('click', event => {
+        event.preventDefault()
+        updatePagination({ config, postDates, pageNumber })
+      })
+    }
 
     return dots
   }

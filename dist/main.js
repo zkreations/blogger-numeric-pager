@@ -14,6 +14,7 @@
     activeClass: 'is-active',
     totalVisibleNumbers: 5,
     checkForUpdates: true,
+    enableDotsJump: false,
     byDate: 'false',
     maxResults: null,
     query: null,
@@ -395,7 +396,8 @@
     const {
       numberContainer,
       numberClass,
-      dotsClass
+      dotsClass,
+      enableDotsJump
     } = config;
     const fragment = document.createDocumentFragment();
     const createPageLink = ({
@@ -413,18 +415,20 @@
       return link;
     };
     const createDots = pageNumber => {
-      const dots = document.createElement('button');
+      const dots = document.createElement(enableDotsJump ? 'button' : 'span');
       dots.className = dotsClass;
       dots.textContent = '...';
       dots.dataset.page = pageNumber;
-      dots.addEventListener('click', event => {
-        event.preventDefault();
-        updatePagination({
-          config,
-          postDates,
-          pageNumber
+      if (enableDotsJump) {
+        dots.addEventListener('click', event => {
+          event.preventDefault();
+          updatePagination({
+            config,
+            postDates,
+            pageNumber
+          });
         });
-      });
+      }
       return dots;
     };
     paginationData.forEach(item => {
