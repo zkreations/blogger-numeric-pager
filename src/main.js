@@ -1,5 +1,5 @@
 import { defaults } from './config/defaults'
-import { getDataFromUrl } from './components/dataManager'
+import { getDataFromUrl, getResultsFromPager } from './components/dataManager'
 import { fetchFeedData, fetchPostData } from './components/feedManager'
 import { getStoredData } from './components/storage'
 import { createPagination } from './components/renderer'
@@ -22,11 +22,7 @@ class BloggerPager {
   async init () {
     if (!this.pagerContainer || !this.numberContainer) return
 
-    const { query, label, homeUrl, checkForUpdates, entriesSelector, entrySelector } = this.config
-
-    const entriesContainer = document.querySelector(entriesSelector)
-    const postPerPage = entriesContainer?.querySelectorAll(entrySelector).length
-    const maxResults = Number(this.config.maxResults) || postPerPage || null
+    const { query, label, homeUrl, checkForUpdates } = this.config
 
     const storedData = getStoredData(query, label)
 
@@ -38,8 +34,8 @@ class BloggerPager {
 
     const config = {
       ...this.config,
-      numberContainer: this.numberContainer,
-      maxResults
+      ...getResultsFromPager(this.pagerContainer),
+      numberContainer: this.numberContainer
     }
 
     const hasStoredData = storedTotal && storedDates.length

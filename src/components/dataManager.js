@@ -108,3 +108,18 @@ export function getDataFromUrl (currentUrl) {
 
   return data
 }
+
+// Get the results from the pager
+// @param {Element} container - The pager container
+// @returns {Object} - The results object
+export function getResultsFromPager (container) {
+  const link = Array.from(container.querySelectorAll('a'))
+    .find(a => a.href.includes('max-results='))
+
+  if (!link) return {}
+
+  const url = new URL(link.href)
+  const maxResults = url.searchParams.get('max-results')
+
+  return { maxResults: Number(maxResults) }
+}
