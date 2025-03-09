@@ -59,12 +59,10 @@ You can customize **blogger-numeric-pager** by passing an options object to the 
 
 | Option                | Type    | Description                                      | Default                |
 |-----------------------|---------|--------------------------------------------------|------------------------|
-| `entriesSelector`     | string  | Selector for the entries container               | `.blog-entries`        |
-| `entrySelector`       | string  | Selector for the entries                         | `.entry`               |
-| `pagerSelector`       | string  | Selector for the pagination container            | `.blog-pager`          |
-| `numberSelector`      | string  | Selector for the pagination numbers container    | `.pagination-numbers`  |
-| `numberClass`         | string  | CSS class for pagination numbers                 | `pagination-item`      |
-| `dotsClass`           | string  | CSS class for the dots (ellipsis)                | `pagination-dots`      |
+| `pagerSelector`       | string  | Selector for the pagination container            | `#blog-pager`          |
+| `numberSelector`      | string  | Selector for the pagination numbers container    | `#pager-numbers`       |
+| `numberClass`         | string  | CSS class for pagination numbers                 | `pager-item`           |
+| `dotsClass`           | string  | CSS class for the dots (ellipsis)                | `pager-dots`           |
 | `activeClass`         | string  | CSS class for active numbers                     | `is-active`            |
 | `totalVisibleNumbers` | number  | Number of visible pagination numbers             | `5`                    |
 | `checkForUpdates`     | boolean | Checks for blog changes to rebuild pagination    | `true`                 |
