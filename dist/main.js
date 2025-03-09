@@ -70,9 +70,11 @@
       totalVisibleNumbers,
       totalPages
     });
-    const dotsData = {
-      number: '...'
-    };
+    const halfVisible = Math.floor(totalVisibleNumbers / 2);
+    const createDotsData = number => ({
+      number,
+      isDots: true
+    });
     const paginationData = numbers.map(number => {
       return {
         number,
@@ -80,19 +82,21 @@
       };
     });
     if (currentPage > 1 && !numbers.includes(1)) {
+      const prevDotsData = createDotsData(Math.max(numbers[0] + 1 - halfVisible, 1));
       const firstPageData = {
         number: 1,
         activeClass: ''
       };
-      paginationData.unshift(dotsData);
+      paginationData.unshift(prevDotsData);
       paginationData.unshift(firstPageData);
     }
     if (currentPage < totalPages && !numbers.includes(totalPages)) {
+      const nextDotsData = createDotsData(Math.min(numbers[numbers.length - 1] + halfVisible, totalPages));
       const lastPageData = {
         number: totalPages,
         activeClass: ''
       };
-      paginationData.push(dotsData);
+      paginationData.push(nextDotsData);
       paginationData.push(lastPageData);
     }
     return paginationData;
@@ -353,6 +357,31 @@
     return pageFromStart ?? pageFromUpdatedMax ?? 1;
   }
 
+  // Update the pagination
+  // @param config - The configuration object
+  // @param postDates - The post dates
+  // @param pageNumber - The page number
+  function updatePagination({
+    config,
+    postDates,
+    pageNumber
+  }) {
+    const {
+      maxResults
+    } = config;
+    const totalPages = getTotalPages(postDates.length, maxResults);
+    const paginationData = createData({
+      config,
+      currentPage: pageNumber,
+      totalPages
+    });
+    renderPagination({
+      config,
+      paginationData,
+      postDates
+    });
+  }
+
   // Render the pagination
   // @param config - The configuration object
   // @param paginationData - The pagination data
@@ -383,14 +412,23 @@
       });
       return link;
     };
-    const createDots = () => {
-      const dots = document.createElement('span');
+    const createDots = pageNumber => {
+      const dots = document.createElement('button');
       dots.className = dotsClass;
       dots.textContent = '...';
+      dots.dataset.page = pageNumber;
+      dots.addEventListener('click', event => {
+        event.preventDefault();
+        updatePagination({
+          config,
+          postDates,
+          pageNumber
+        });
+      });
       return dots;
     };
     paginationData.forEach(item => {
-      fragment.appendChild(item.number === '...' ? createDots() : createPageLink(item));
+      fragment.appendChild(item.isDots ? createDots(item.number) : createPageLink(item));
     });
     numberContainer.innerHTML = '';
     numberContainer.appendChild(fragment);

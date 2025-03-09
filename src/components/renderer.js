@@ -84,6 +84,23 @@ function getCurrentPageFromUrl ({ config, postDates }) {
   return pageFromStart ?? pageFromUpdatedMax ?? 1
 }
 
+// Update the pagination
+// @param config - The configuration object
+// @param postDates - The post dates
+// @param pageNumber - The page number
+function updatePagination ({ config, postDates, pageNumber }) {
+  const { maxResults } = config
+
+  const totalPages = getTotalPages(postDates.length, maxResults)
+  const paginationData = createData({ config, currentPage: pageNumber, totalPages })
+
+  renderPagination({
+    config,
+    paginationData,
+    postDates
+  })
+}
+
 // Render the pagination
 // @param config - The configuration object
 // @param paginationData - The pagination data
@@ -102,16 +119,23 @@ function renderPagination ({ config, paginationData, postDates }) {
     return link
   }
 
-  const createDots = () => {
-    const dots = document.createElement('span')
+  const createDots = (pageNumber) => {
+    const dots = document.createElement('button')
     dots.className = dotsClass
     dots.textContent = '...'
+    dots.dataset.page = pageNumber
+
+    dots.addEventListener('click', event => {
+      event.preventDefault()
+      updatePagination({ config, postDates, pageNumber })
+    })
+
     return dots
   }
 
   paginationData.forEach(item => {
     fragment.appendChild(
-      item.number === '...' ? createDots() : createPageLink(item)
+      item.isDots ? createDots(item.number) : createPageLink(item)
     )
   })
 

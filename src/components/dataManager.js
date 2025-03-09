@@ -38,7 +38,12 @@ export function createData ({ config, currentPage, totalPages }) {
     totalPages
   })
 
-  const dotsData = { number: '...' }
+  const halfVisible = Math.floor(totalVisibleNumbers / 2)
+
+  const createDotsData = (number) => ({
+    number,
+    isDots: true
+  })
 
   const paginationData = numbers.map((number) => {
     return {
@@ -48,22 +53,24 @@ export function createData ({ config, currentPage, totalPages }) {
   })
 
   if (currentPage > 1 && !numbers.includes(1)) {
+    const prevDotsData = createDotsData(Math.max((numbers[0] + 1) - halfVisible, 1))
     const firstPageData = {
       number: 1,
       activeClass: ''
     }
 
-    paginationData.unshift(dotsData)
+    paginationData.unshift(prevDotsData)
     paginationData.unshift(firstPageData)
   }
 
   if (currentPage < totalPages && !numbers.includes(totalPages)) {
+    const nextDotsData = createDotsData(Math.min(numbers[numbers.length - 1] + halfVisible, totalPages))
     const lastPageData = {
       number: totalPages,
       activeClass: ''
     }
 
-    paginationData.push(dotsData)
+    paginationData.push(nextDotsData)
     paginationData.push(lastPageData)
   }
 
