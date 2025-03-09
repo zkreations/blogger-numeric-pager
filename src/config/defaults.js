@@ -8,7 +8,7 @@ export const defaults = {
   activeClass: 'is-active',
   totalVisibleNumbers: 5,
   checkForUpdates: true,
-  enableDotsJump: false,
+  enableDotsJump: true,
   byDate: 'false',
   maxResults: null,
   query: null,
