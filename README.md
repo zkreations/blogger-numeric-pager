@@ -53,10 +53,12 @@ const pager = new BloggerPager()
 pager.init()
 ```
 
-Now, you need create a container (with the id `blog-pager` by default) where the pagination numbers will be displayed:
+ Now, you need create a container for the pagination (with the id `blog-pager` by default) and another for the numbers (with the id `pager-numbers` by default). For example:
 
 ```html
-<div id="blog-pager"></div>
+<div id="blog-pager">
+  <div id="pager-numbers"></div>
+</div>
 ```
 
 ## Options
