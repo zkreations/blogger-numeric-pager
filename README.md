@@ -53,7 +53,16 @@ const pager = new BloggerPager()
 pager.init()
 ```
 
- Now, you need create a container for the pagination (with the id `blog-pager` by default) and another for the numbers (with the id `pager-numbers` by default). For example:
+if you want to run JavaScript code after the pagination has been initialized, you can do it like this:
+
+```javascript
+const pager = new BloggerPager()
+pager.init().then(() => {
+  // Your code here
+})
+```
+
+Now, you need create a container for the pagination (with the id `blog-pager` by default) and another for the numbers (with the id `pager-numbers` by default). For example:
 
 ```html
 <div id="blog-pager">
