@@ -7,12 +7,10 @@
   // Define the default values for the blog pagination
   // @type {Object}
   const defaults = {
-    entriesSelector: '.blog-entries',
-    entrySelector: '.entry',
-    pagerSelector: '.blog-pager',
-    numberSelector: '.pagination-numbers',
-    numberClass: 'pagination-item',
-    dotsClass: 'pagination-dots',
+    pagerSelector: '#blog-pager',
+    numberSelector: '#pager-numbers',
+    numberClass: 'pager-item',
+    dotsClass: 'pager-dots',
     activeClass: 'is-active',
     totalVisibleNumbers: 5,
     checkForUpdates: true,
@@ -129,6 +127,19 @@
     const label = getLabelFromPathname(urlPathname);
     if (label) data.label = label;
     return data;
+  }
+
+  // Get the results from the pager
+  // @param {Element} container - The pager container
+  // @returns {Object} - The results object
+  function getResultsFromPager(container) {
+    const link = Array.from(container.querySelectorAll('a')).find(a => a.href.includes('max-results='));
+    if (!link) return {};
+    const url = new URL(link.href);
+    const maxResults = url.searchParams.get('max-results');
+    return {
+      maxResults: Number(maxResults)
+    };
   }
 
   // Create a hash from a string
@@ -432,13 +443,8 @@
         query,
         label,
         homeUrl,
-        checkForUpdates,
-        entriesSelector,
-        entrySelector
+        checkForUpdates
       } = this.config;
-      const entriesContainer = document.querySelector(entriesSelector);
-      const postPerPage = entriesContainer?.querySelectorAll(entrySelector).length;
-      const maxResults = Number(this.config.maxResults) || postPerPage || null;
       const storedData = getStoredData(query, label);
       const {
         totalPosts: storedTotal = 0,
@@ -447,8 +453,8 @@
       } = storedData;
       const config = {
         ...this.config,
-        numberContainer: this.numberContainer,
-        maxResults
+        ...getResultsFromPager(this.pagerContainer),
+        numberContainer: this.numberContainer
       };
       const hasStoredData = storedTotal && storedDates.length;
       if (hasStoredData) {
