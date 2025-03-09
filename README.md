@@ -74,6 +74,7 @@ You can customize **blogger-numeric-pager** by passing an options object to the 
 | `activeClass`         | string  | CSS class for active numbers                     | `is-active`            |
 | `totalVisibleNumbers` | number  | Number of visible pagination numbers             | `5`                    |
 | `checkForUpdates`     | boolean | Checks for blog changes to rebuild pagination    | `true`                 |
+| `enableDotsJump`      | boolean | Make dots clickable to jump between segments     | `true`                 |
 
 For example, to customize the number of visible pagination links and disable update checking:
 
