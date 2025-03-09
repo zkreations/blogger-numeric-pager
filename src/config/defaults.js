@@ -6,7 +6,7 @@ export const defaults = {
   numberClass: 'pager-item',
   dotsClass: 'pager-dots',
   activeClass: 'is-active',
-  totalVisibleNumbers: 5,
+  totalVisibleNumbers: 6,
   checkForUpdates: true,
   enableDotsJump: true,
   byDate: 'false',

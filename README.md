@@ -81,7 +81,7 @@ You can customize **blogger-numeric-pager** by passing an options object to the 
 | `numberClass`         | string  | CSS class for pagination numbers                 | `pager-item`           |
 | `dotsClass`           | string  | CSS class for the dots (ellipsis)                | `pager-dots`           |
 | `activeClass`         | string  | CSS class for active numbers                     | `is-active`            |
-| `totalVisibleNumbers` | number  | Number of visible pagination numbers             | `5`                    |
+| `totalVisibleNumbers` | number  | Number of visible pagination numbers             | `6`                    |
 | `checkForUpdates`     | boolean | Checks for blog changes to rebuild pagination    | `true`                 |
 | `enableDotsJump`      | boolean | Make dots clickable to jump between segments     | `true`                 |
 
