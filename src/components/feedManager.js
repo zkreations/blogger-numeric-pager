@@ -27,11 +27,8 @@ export async function fetchFeedData ({ homeUrl, query, label }) {
 }
 
 // Get the post dates and the total number of posts
-// @param totalPosts - The total number of posts
-// @param homeUrl - The blog's home URL
-// @param query - The search query
-// @param label - The label
-// @param byDate - Sort by date
+// @param {Object} config - The configuration object
+// @param {Number} totalPosts - The total number of posts
 // @returns {Object} - The post dates and the total number of posts
 export async function fetchPostData ({ config, totalPosts }) {
   const { homeUrl, query, label, byDate } = config

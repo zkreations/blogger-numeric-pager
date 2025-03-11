@@ -21,11 +21,11 @@ function getUpdatedMax (number, postDates, maxResults) {
 }
 
 // Get the first page URL
-// @param homeUrl - The home URL
-// @param label - The label
-// @param query - The query
-// @param maxResults - The maximum number of results
-// @param byDate - The by date
+// @param {String} homeUrl - The blog's home URL
+// @param {String} label - The label
+// @param {String} query - The query
+// @param {Number} maxResults - The maximum number of results
+// @param {Boolean} byDate - Sort by date
 // @returns {String} - The first page URL
 function getFirstPageUrl ({ homeUrl, label, query, maxResults, byDate }) {
   if (label) return `${homeUrl}/search/label/${label}?max-results=${maxResults}`
@@ -34,8 +34,9 @@ function getFirstPageUrl ({ homeUrl, label, query, maxResults, byDate }) {
 }
 
 // Get the base URL
-// @param label - The label
-// @param query - The query
+// @param {String} label - The label
+// @param {String} query - The query
+// @returns {String} - The base URL
 function getBaseUrl (label, query) {
   if (label) return `/search/label/${label}?`
   if (query) return `/search?q=${query}&`
@@ -43,9 +44,9 @@ function getBaseUrl (label, query) {
 }
 
 // Generate the page link
-// @param config - The configuration object
-// @param number - The page number
-// @param postDates - The post dates
+// @param {Object} config - The configuration object
+// @param {Number} number - The page number
+// @param {Array} postDates - The post dates
 // @returns {String} - The page link
 function generatePageLink ({ config, number, postDates }) {
   const { homeUrl, label, query, maxResults, byDate } = config
@@ -61,9 +62,9 @@ function generatePageLink ({ config, number, postDates }) {
 }
 
 // Get the current page from the URL
-// @param config - The configuration object
-// @param postDates - The post dates
-// @returns {Number} - The current page
+// @param {Object} config - The configuration object
+// @param {Array} postDates - The post dates
+// @returns {Number} - The current page number
 function getCurrentPageFromUrl ({ config, postDates }) {
   const { query, maxResults, updatedMax, start } = config
 
@@ -85,9 +86,10 @@ function getCurrentPageFromUrl ({ config, postDates }) {
 }
 
 // Update the pagination
-// @param config - The configuration object
-// @param postDates - The post dates
-// @param pageNumber - The page number
+// @param {Object} config - The configuration object
+// @param {Array} postDates - The post dates
+// @param {Number} pageNumber - The page number
+// @returns {void}
 function updatePagination ({ config, postDates, pageNumber }) {
   const { maxResults } = config
 
@@ -102,9 +104,10 @@ function updatePagination ({ config, postDates, pageNumber }) {
 }
 
 // Render the pagination
-// @param config - The configuration object
-// @param paginationData - The pagination data
-// @param postDates - The post dates
+// @param {Object} config - The configuration object
+// @param {Array} paginationData - The pagination data
+// @param {Array} postDates - The post dates
+// @returns {void}
 function renderPagination ({ config, paginationData, postDates }) {
   if (!paginationData.length) return
 
@@ -146,9 +149,10 @@ function renderPagination ({ config, paginationData, postDates }) {
 }
 
 // Create the pagination
-// @param config - The configuration object
-// @param totalPosts - The total number of posts
-// @param postDates - The post dates
+// @param {Object} config - The configuration object
+// @param {Number} totalPosts - The total number of posts
+// @param {Array} postDates - The post dates
+// @returns {void}
 export function createPagination ({ config, totalPosts, postDates }) {
   const { maxResults } = config
 

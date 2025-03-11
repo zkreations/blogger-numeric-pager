@@ -1,7 +1,7 @@
 // Create page numbers
-// @param currentPage - The current page
-// @param totalPages - The total pages
-// @param totalVisibleNumbers - The total visible numbers
+// @param {Number} currentPage - The current page
+// @param {Number} totalPages - The total pages
+// @param {Number} totalVisibleNumbers - The total visible numbers
 // @returns {Array} - The page numbers
 function generatePageNumbers ({ currentPage, totalPages, totalVisibleNumbers }) {
   const lastPage = totalPages
@@ -25,9 +25,9 @@ function generatePageNumbers ({ currentPage, totalPages, totalVisibleNumbers }) 
 }
 
 // Create pagination data
-// @param currentPage - The current page
-// @param totalPages - The total pages
-// @param totalVisibleNumbers - The total visible numbers
+// @param {Object} config - The configuration object
+// @param {Number} currentPage - The current page
+// @param {Number} totalPages - The total pages
 // @returns {Array} - The pagination data
 export function createData ({ config, currentPage, totalPages }) {
   const { totalVisibleNumbers, activeClass } = config

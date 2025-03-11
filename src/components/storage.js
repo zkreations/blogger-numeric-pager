@@ -21,9 +21,10 @@ function createStorageKey (query = null, label = null) {
 }
 
 // Set data in local storage as JSON
-// @param {data} data - The data to store
+// @param {Object} data - The data to store
 // @param {String} label - The label
 // @param {String} query - The search query
+// @returns {void}
 export function setStoredData (data, query, label) {
   const STORAGE_KEY = createStorageKey(query, label)
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
