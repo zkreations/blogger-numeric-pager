@@ -93,6 +93,28 @@ function toCamelCase (str) {
   return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 }
 
+// Normalize data from dataset attributes
+// @param {string} value - The value to normalize
+// @returns {boolean|number|null} - The normalized value
+export function normalizeData (value) {
+  const trimmed = value.trim()
+
+  const predefinedValues = {
+    true: true,
+    false: false,
+    null: null
+  }
+
+  if (trimmed in predefinedValues) {
+    return predefinedValues[trimmed]
+  }
+
+  if (!isNaN(trimmed)) return Number(trimmed)
+  if (trimmed === '') return null
+
+  return trimmed
+}
+
 // Get data from the URL
 // @param {URL} currentUrl - The current URL object
 // @returns {Object} - The data object
@@ -114,6 +136,26 @@ export function getDataFromUrl (currentUrl) {
   if (label) data.label = label
 
   return data
+}
+
+// Get data attributes
+// @param {Object} options - The options object
+// @param {Object} options.dataset - The dataset object
+// @returns {Object} The data attributes
+export function getDataAttributes ({ dataset = {} } = {}) {
+  const keys = [
+    'numberClass',
+    'dotsClass',
+    'activeClass',
+    'totalVisibleNumbers',
+    'checkForUpdates',
+    'enableDotsJump'
+  ]
+
+  return Object.fromEntries(keys
+    .filter(key => dataset[key] !== undefined)
+    .map(key => [key, normalizeData(dataset[key])])
+  )
 }
 
 // Get the results from the pager

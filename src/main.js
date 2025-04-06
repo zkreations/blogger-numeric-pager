@@ -1,5 +1,5 @@
 import { defaults } from './config/defaults'
-import { getDataFromUrl, getResultsFromPager } from './components/dataManager'
+import { getDataFromUrl, getDataAttributes, getResultsFromPager } from './components/dataManager'
 import { fetchFeedData, fetchPostData } from './components/feedManager'
 import { getStoredData } from './components/storage'
 import { createPagination } from './components/renderer'
@@ -35,6 +35,7 @@ class BloggerPager {
     const config = {
       ...this.config,
       ...getResultsFromPager(this.pagerContainer),
+      ...getDataAttributes(this.pagerContainer),
       numberContainer: this.numberContainer
     }
 

@@ -24,9 +24,9 @@
   };
 
   // Create page numbers
-  // @param currentPage - The current page
-  // @param totalPages - The total pages
-  // @param totalVisibleNumbers - The total visible numbers
+  // @param {Number} currentPage - The current page
+  // @param {Number} totalPages - The total pages
+  // @param {Number} totalVisibleNumbers - The total visible numbers
   // @returns {Array} - The page numbers
   function generatePageNumbers({
     currentPage,
@@ -53,9 +53,9 @@
   }
 
   // Create pagination data
-  // @param currentPage - The current page
-  // @param totalPages - The total pages
-  // @param totalVisibleNumbers - The total visible numbers
+  // @param {Object} config - The configuration object
+  // @param {Number} currentPage - The current page
+  // @param {Number} totalPages - The total pages
   // @returns {Array} - The pagination data
   function createData({
     config,
@@ -117,6 +117,24 @@
     return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
   }
 
+  // Normalize data from dataset attributes
+  // @param {string} value - The value to normalize
+  // @returns {boolean|number|null} - The normalized value
+  function normalizeData(value) {
+    const trimmed = value.trim();
+    const predefinedValues = {
+      true: true,
+      false: false,
+      null: null
+    };
+    if (trimmed in predefinedValues) {
+      return predefinedValues[trimmed];
+    }
+    if (!isNaN(trimmed)) return Number(trimmed);
+    if (trimmed === '') return null;
+    return trimmed;
+  }
+
   // Get data from the URL
   // @param {URL} currentUrl - The current URL object
   // @returns {Object} - The data object
@@ -132,6 +150,17 @@
     const label = getLabelFromPathname(urlPathname);
     if (label) data.label = label;
     return data;
+  }
+
+  // Get data attributes
+  // @param {Object} options - The options object
+  // @param {Object} options.dataset - The dataset object
+  // @returns {Object} The data attributes
+  function getDataAttributes({
+    dataset = {}
+  } = {}) {
+    const keys = ['numberClass', 'dotsClass', 'activeClass', 'totalVisibleNumbers', 'checkForUpdates', 'enableDotsJump'];
+    return Object.fromEntries(keys.filter(key => dataset[key] !== undefined).map(key => [key, normalizeData(dataset[key])]));
   }
 
   // Get the results from the pager
@@ -169,9 +198,10 @@
   }
 
   // Set data in local storage as JSON
-  // @param {data} data - The data to store
+  // @param {Object} data - The data to store
   // @param {String} label - The label
   // @param {String} query - The search query
+  // @returns {void}
   function setStoredData(data, query, label) {
     const STORAGE_KEY = createStorageKey(query, label);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -213,11 +243,8 @@
   }
 
   // Get the post dates and the total number of posts
-  // @param totalPosts - The total number of posts
-  // @param homeUrl - The blog's home URL
-  // @param query - The search query
-  // @param label - The label
-  // @param byDate - Sort by date
+  // @param {Object} config - The configuration object
+  // @param {Number} totalPosts - The total number of posts
   // @returns {Object} - The post dates and the total number of posts
   async function fetchPostData({
     config,
@@ -276,11 +303,11 @@
   }
 
   // Get the first page URL
-  // @param homeUrl - The home URL
-  // @param label - The label
-  // @param query - The query
-  // @param maxResults - The maximum number of results
-  // @param byDate - The by date
+  // @param {String} homeUrl - The blog's home URL
+  // @param {String} label - The label
+  // @param {String} query - The query
+  // @param {Number} maxResults - The maximum number of results
+  // @param {Boolean} byDate - Sort by date
   // @returns {String} - The first page URL
   function getFirstPageUrl({
     homeUrl,
@@ -295,8 +322,9 @@
   }
 
   // Get the base URL
-  // @param label - The label
-  // @param query - The query
+  // @param {String} label - The label
+  // @param {String} query - The query
+  // @returns {String} - The base URL
   function getBaseUrl(label, query) {
     if (label) return `/search/label/${label}?`;
     if (query) return `/search?q=${query}&`;
@@ -304,9 +332,9 @@
   }
 
   // Generate the page link
-  // @param config - The configuration object
-  // @param number - The page number
-  // @param postDates - The post dates
+  // @param {Object} config - The configuration object
+  // @param {Number} number - The page number
+  // @param {Array} postDates - The post dates
   // @returns {String} - The page link
   function generatePageLink({
     config,
@@ -335,9 +363,9 @@
   }
 
   // Get the current page from the URL
-  // @param config - The configuration object
-  // @param postDates - The post dates
-  // @returns {Number} - The current page
+  // @param {Object} config - The configuration object
+  // @param {Array} postDates - The post dates
+  // @returns {Number} - The current page number
   function getCurrentPageFromUrl({
     config,
     postDates
@@ -359,9 +387,10 @@
   }
 
   // Update the pagination
-  // @param config - The configuration object
-  // @param postDates - The post dates
-  // @param pageNumber - The page number
+  // @param {Object} config - The configuration object
+  // @param {Array} postDates - The post dates
+  // @param {Number} pageNumber - The page number
+  // @returns {void}
   function updatePagination({
     config,
     postDates,
@@ -384,9 +413,10 @@
   }
 
   // Render the pagination
-  // @param config - The configuration object
-  // @param paginationData - The pagination data
-  // @param postDates - The post dates
+  // @param {Object} config - The configuration object
+  // @param {Array} paginationData - The pagination data
+  // @param {Array} postDates - The post dates
+  // @returns {void}
   function renderPagination({
     config,
     paginationData,
@@ -439,9 +469,10 @@
   }
 
   // Create the pagination
-  // @param config - The configuration object
-  // @param totalPosts - The total number of posts
-  // @param postDates - The post dates
+  // @param {Object} config - The configuration object
+  // @param {Number} totalPosts - The total number of posts
+  // @param {Array} postDates - The post dates
+  // @returns {void}
   function createPagination({
     config,
     totalPosts,
@@ -496,6 +527,7 @@
       const config = {
         ...this.config,
         ...getResultsFromPager(this.pagerContainer),
+        ...getDataAttributes(this.pagerContainer),
         numberContainer: this.numberContainer
       };
       const hasStoredData = storedTotal && storedDates.length;
