@@ -96,6 +96,14 @@ const pager = new BloggerPager({
 pager.init()
 ```
 
+Additionally, you can configure the instantiated pagination in the HTML using `data-*` attributes on the pagination container. For example:
+
+```html
+<div id="blog-pager" data-check-for-updates="false">
+  <div id="pager-numbers"></div>
+</div>
+```
+
 ## Methods
 
 All methods are available through the instance of `BloggerPager`:
