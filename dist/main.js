@@ -515,8 +515,7 @@
       const {
         query,
         label,
-        homeUrl,
-        checkForUpdates
+        homeUrl
       } = this.config;
       const storedData = getStoredData(query, label);
       const {
@@ -530,6 +529,7 @@
         ...getDataAttributes(this.pagerContainer),
         numberContainer: this.numberContainer
       };
+      const checkForUpdates = config.checkForUpdates;
       const hasStoredData = storedTotal && storedDates.length;
       if (hasStoredData) {
         createPagination({
@@ -538,8 +538,6 @@
           postDates: storedDates
         });
       }
-
-      // If there is stored data and we don't want to check for updates, we can stop here
       if (hasStoredData && !checkForUpdates) {
         if (config.maxResults >= storedTotal) this.pagerContainer.remove();
         return;

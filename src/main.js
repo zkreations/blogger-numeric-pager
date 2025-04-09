@@ -22,7 +22,7 @@ class BloggerPager {
   async init () {
     if (!this.pagerContainer || !this.numberContainer) return
 
-    const { query, label, homeUrl, checkForUpdates } = this.config
+    const { query, label, homeUrl } = this.config
 
     const storedData = getStoredData(query, label)
 
@@ -39,6 +39,7 @@ class BloggerPager {
       numberContainer: this.numberContainer
     }
 
+    const checkForUpdates = config.checkForUpdates
     const hasStoredData = storedTotal && storedDates.length
 
     if (hasStoredData) {
@@ -49,7 +50,6 @@ class BloggerPager {
       })
     }
 
-    // If there is stored data and we don't want to check for updates, we can stop here
     if (hasStoredData && !checkForUpdates) {
       if (config.maxResults >= storedTotal) this.pagerContainer.remove()
       return
