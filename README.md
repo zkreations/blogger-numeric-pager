@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/zkreations/blogger-numeric-pager/main/logo.png" align="left" />
 
-![V](https://img.shields.io/npm/v/blogger-numeric-pager) ![L](https://img.shields.io/npm/l/blogger-numeric-pager)
+[![V](https://img.shields.io/npm/v/blogger-numeric-pager)](https://www.npmjs.com/package/blogger-numeric-pager) [![L](https://img.shields.io/npm/l/blogger-numeric-pager)](LICENSE)
 
 **Blogger Numeric Pager** is an advanced pagination for Blogger that also works in searches. It stores processed data locally and only updates if the blog changes. [Live Demo →](https://www.zkreations.com/search?max-results=8)
 
