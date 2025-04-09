@@ -1,7 +1,5 @@
 declare module 'blogger-numeric-pager' {
   interface PagerOptions {
-    entriesSelector?: string;
-    entrySelector?: string;
     pagerSelector?: string;
     numberSelector?: string;
     numberClass?: string;
@@ -9,9 +7,12 @@ declare module 'blogger-numeric-pager' {
     activeClass?: string;
     totalVisibleNumbers?: number;
     checkForUpdates?: boolean;
-    maxResults?: number;
-    label?: string;
-    query?: string;
+    enableDotsJump?: boolean;
+    byDate?: string;
+    maxResults?: number | null;
+    query?: string | null;
+    label?: string | null;
+    start?: number | null;
   }
 
   class NumericPager {
