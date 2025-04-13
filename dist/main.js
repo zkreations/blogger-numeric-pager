@@ -541,9 +541,9 @@
       } = this.config;
       const storedData = getStoredData(query, label);
       const {
-        storedTotal,
-        storedDates,
-        storedUpdated
+        totalPosts: storedTotal,
+        blogUpdated: storedUpdated,
+        postDates: storedDates
       } = storedData;
       const config = {
         ...this.config,

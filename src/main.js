@@ -25,7 +25,11 @@ class BloggerPager {
     const { query, label, homeUrl } = this.config
 
     const storedData = getStoredData(query, label)
-    const { storedTotal, storedDates, storedUpdated } = storedData
+    const {
+      totalPosts: storedTotal,
+      blogUpdated: storedUpdated,
+      postDates: storedDates
+    } = storedData
 
     const config = {
       ...this.config,
