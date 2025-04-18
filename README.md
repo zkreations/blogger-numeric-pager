@@ -32,7 +32,7 @@ npm i blogger-numeric-pager
 ### cdn
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/blogger-numeric-pager@1/dist/main.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/blogger-numeric-pager@1/dist/main.min.js"></script>
 ```
 
 ## How to use
@@ -42,22 +42,19 @@ You can use **blogger-numeric-pager** as an ES6 module or as a global script. Fo
 ```javascript
 import BloggerPager from 'blogger-numeric-pager'
 
-const pager = new BloggerPager()
-pager.init()
+new BloggerPager().init()
 ```
 
 If you are using it as a global script, you can access it via the `BloggerPager` global variable:
 
 ```javascript
-const pager = new BloggerPager()
-pager.init()
+new BloggerPager().init()
 ```
 
 if you want to run JavaScript code after the pagination has been initialized, you can do it like this:
 
 ```javascript
-const pager = new BloggerPager()
-pager.init().then(() => {
+new BloggerPager().init().then(() => {
   // Your code here
 })
 ```
@@ -88,12 +85,10 @@ You can customize **blogger-numeric-pager** by passing an options object to the 
 For example, to customize the number of visible pagination links and disable update checking:
 
 ```javascript
-const pager = new BloggerPager({
+new BloggerPager({
   totalVisibleNumbers: 7,
   checkForUpdates: false
-})
-
-pager.init()
+}).init()
 ```
 
 Additionally, you can configure the instantiated pagination in the HTML using `data-*` attributes on the pagination container. For example:
