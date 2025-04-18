@@ -15,10 +15,10 @@ declare module 'blogger-numeric-pager' {
     start?: number | null;
   }
 
-  class NumericPager {
+  class BloggerPager {
     constructor(options?: PagerOptions);
     init(): Promise<void>;
   }
 
-  export default NumericPager;
+  export default BloggerPager;
 }
