@@ -1,6 +1,6 @@
-# blogger-numeric-pager
+# Blogger Numeric Pager
 
-<img src="https://raw.githubusercontent.com/zkreations/blogger-numeric-pager/main/logo.png" align="left" />
+![logo](https://raw.githubusercontent.com/zkreations/blogger-numeric-pager/main/logo.png)
 
 [![V](https://img.shields.io/npm/v/blogger-numeric-pager)](https://www.npmjs.com/package/blogger-numeric-pager) [![L](https://img.shields.io/npm/l/blogger-numeric-pager)](LICENSE)
 
